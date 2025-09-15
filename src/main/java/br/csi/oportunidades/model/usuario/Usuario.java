@@ -1,4 +1,4 @@
-package br.csi.oportunidades.model;
+package br.csi.oportunidades.model.usuario;
 
 
 import jakarta.persistence.*;
@@ -26,6 +26,10 @@ public class Usuario {
     private String telefone;
     @Column(unique = true)
     private String doc;
+
+    private String matricula;
+
+    private String role;
 
 
     private String cep;

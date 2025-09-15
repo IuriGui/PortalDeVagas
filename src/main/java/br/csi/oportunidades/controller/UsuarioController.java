@@ -1,7 +1,7 @@
 package br.csi.oportunidades.controller;
 
 
-import br.csi.oportunidades.model.Usuario;
+import br.csi.oportunidades.model.usuario.Usuario;
 import br.csi.oportunidades.service.UsuarioService;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +39,11 @@ public class UsuarioController {
     @DeleteMapping("{id}")
     public void deleteUsuario(@PathVariable UUID id) {
         usuarioService.delete(id);
+    }
+
+    @PutMapping("{id}")
+    public void updateUsuario(@RequestBody Usuario usuario) {
+        usuarioService.update(usuario);
     }
 
 

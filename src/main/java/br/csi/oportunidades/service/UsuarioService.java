@@ -1,8 +1,9 @@
 package br.csi.oportunidades.service;
 
 
-import br.csi.oportunidades.model.Usuario;
-import br.csi.oportunidades.model.UsuarioRepository;
+import br.csi.oportunidades.model.usuario.Usuario;
+import br.csi.oportunidades.model.usuario.UsuarioRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -14,9 +15,11 @@ import java.util.UUID;
 public class UsuarioService {
 
     private final UsuarioRepository repository;
+    private final BCryptPasswordEncoder encoder;
 
     public UsuarioService(UsuarioRepository usuarioRepository) {
         this.repository = usuarioRepository;
+        this.encoder = new BCryptPasswordEncoder();
     }
 
     public List<Usuario> findAll() {
@@ -26,11 +29,21 @@ public class UsuarioService {
     public Optional<Usuario> findById(UUID id) {
         return repository.findById(id);
     }
+
     public void save(Usuario usuario) {
+        if ("ADMIN".equalsIgnoreCase(usuario.getRole())) {
+            throw new SecurityException("Você não tem permissão para criar um ADMIN");
+        }
+        usuario.setSenha(encoder.encode(usuario.getSenha()));
+
         repository.save(usuario);
     }
     public void delete(UUID id) {
         repository.deleteById(id);
+    }
+
+    public void update(Usuario usuario) {
+        repository.save(usuario);
     }
 
 

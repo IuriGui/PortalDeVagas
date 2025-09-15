@@ -47,6 +47,8 @@ CREATE TABLE "oportunidade" (
                                     CHECK ("tipo" IN ('bolsa', 'estagio', 'trabalho', 'pesquisa')),
                                 "data_inicio" timestamp NOT NULL,
                                 "data_fim" timestamp NOT NULL,
+                                "turno" varchar(12) NOT NULL,
+                                    CHECK ( "turno" IN ('integral','manha', 'tarde', 'noite') ),
                                 "excluida" boolean NOT NULL DEFAULT false,
                                 CONSTRAINT fk_instituicao FOREIGN KEY ("id_instituicao") REFERENCES "instituicao" ("uuid")
 );
