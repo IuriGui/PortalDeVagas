@@ -1,14 +1,26 @@
 package br.csi.oportunidades.model.oportunidade;
 
+import br.csi.oportunidades.model.usuario.Usuario;
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.UUID;
 
+
+
+@Entity
 public class Oportunidade {
 
-    private UUID id;
+
+
+    @Id
+    @GeneratedValue
     private UUID uuid;
-    private UUID idInstituicao;
+
+    @ManyToOne
+    @JoinColumn(name = "id_instituicao", nullable = false)
+    private Usuario instituicao;
 
     private String titulo;
     private String descricao;
@@ -22,6 +34,7 @@ public class Oportunidade {
 
     private int cargaHoraria;
     private String area;
+
 
 
 }

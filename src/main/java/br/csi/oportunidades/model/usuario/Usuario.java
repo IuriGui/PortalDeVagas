@@ -1,9 +1,11 @@
 package br.csi.oportunidades.model.usuario;
 
 
+import br.csi.oportunidades.model.oportunidade.Oportunidade;
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -28,10 +30,7 @@ public class Usuario {
     private String doc;
 
     private String matricula;
-
     private String role;
-
-
     private String cep;
     private String uf;
     private String cidade;
@@ -39,9 +38,12 @@ public class Usuario {
     private String rua;
     private String numero;
     private String complemento;
-
     private BigDecimal latitude;
     private BigDecimal longitude;
+
+    @OneToMany(mappedBy = "instituicao", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Oportunidade> oportunidades;
+
 
 
 }
