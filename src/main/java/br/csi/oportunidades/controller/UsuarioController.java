@@ -3,9 +3,16 @@ package br.csi.oportunidades.controller;
 
 import br.csi.oportunidades.model.usuario.Usuario;
 import br.csi.oportunidades.service.UsuarioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -17,6 +24,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/usuario")
+@Tag(name = "Usuario")
 public class UsuarioController {
 
     private UsuarioService usuarioService;
@@ -30,7 +38,8 @@ public class UsuarioController {
         return usuarioService.findAll();
     }
 
-    //Get One User
+
+
     @GetMapping("{id}")
     public Optional<Usuario> getUsuario(@PathVariable UUID id) {
         return usuarioService.findById(id);
@@ -39,6 +48,16 @@ public class UsuarioController {
 
     @PostMapping
     @Transactional
+    @Operation(summary = "Criar novo usuário", description = "cria novo usuário")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "201", description = "Usuário criado com sucesso",
+                    content = @Content(mediaType = "aplication/json", schema = @Schema(implementation = Usuario.class))
+            ),
+            @ApiResponse(
+                    responseCode = "400", description = "invalid parameters"
+            )
+    })
     public ResponseEntity<Usuario> saveUsuario(@RequestBody @Valid Usuario usuario,
                                                UriComponentsBuilder uriBuilder) {
         usuarioService.save(usuario);

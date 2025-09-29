@@ -5,6 +5,7 @@ import br.csi.oportunidades.model.usuario.types.Business;
 import br.csi.oportunidades.model.usuario.types.Candidate;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -44,11 +45,12 @@ public abstract class Usuario {
 
     @Id
     @GeneratedValue
-    private UUID uuid;
+    private UUID uuid ;
 
 
     @NotBlank(message = "O nome é obrigatório")
     @Size(max = 50, message = "O nome deve ter no máximo 50 caracteres")
+    @Schema(description = "Nomedealguem",example = "Maria")
     private String nome;
 
     @Column(unique = true)
