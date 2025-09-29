@@ -1,0 +1,2 @@
+ALTER TABLE "usuario"
+ADD COLUMN doc VARCHAR(14);
